@@ -20,6 +20,10 @@
     --red-deep:#b71c1c;
     --text:#e8e8ea;
     --muted:#9a9aa0;
+    --high:#ff5252;
+    --info:#ffb300;
+    --blocked:#4caf50;
+    --unknown:#9a9aa0;
 }
 
 *{box-sizing:border-box;}
@@ -108,7 +112,7 @@ input#url{
     font-size:15px;
     font-family:'JetBrains Mono',monospace;
     margin-top:8px;
-    margin-bottom:20px;
+    margin-bottom:16px;
     background:#0c0c0e;
     color:#f5f5f5;
     border:1px solid #3a3a40;
@@ -122,28 +126,24 @@ input#url:focus{
     box-shadow:0 0 0 3px rgba(229,57,53,.22);
 }
 
-.checkbox-row{
+.origin-note{
     display:flex;
-    align-items:center;
+    align-items:flex-start;
     gap:10px;
-    padding:14px 16px;
+    padding:12px 14px;
     background:#0c0c0e;
     border:1px solid #2a2a2e;
     border-radius:10px;
     margin-bottom:22px;
-    font-size:14px;
-    color:#d0d0d4;
-    text-transform:none;
-    letter-spacing:normal;
-    font-weight:500;
-    cursor:pointer;
+    font-size:12.5px;
+    line-height:1.5;
+    color:var(--muted);
 }
 
-.checkbox-row input[type="checkbox"]{
-    width:18px;
-    height:18px;
-    accent-color:var(--red);
-    cursor:pointer;
+.origin-note code{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--red-bright);
+    font-size:12px;
 }
 
 button{
@@ -167,22 +167,41 @@ button:hover{
 
 button:active{transform:translateY(1px);}
 
+button:disabled{
+    filter:grayscale(.5) brightness(.7);
+    cursor:not-allowed;
+    box-shadow:none;
+}
+
 #result{margin-top:26px;}
 
 #result p{color:var(--muted);line-height:1.6;}
 
-.success{
-    color:var(--red-bright);
-    font-weight:800;
-    font-size:24px;
-    margin:6px 0 12px;
+.verdict{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:6px 0 14px;
 }
 
-.fail{
-    color:var(--muted);
+.verdict .badge{
     font-weight:800;
-    font-size:24px;
-    margin:6px 0 12px;
+    font-size:15px;
+    letter-spacing:.5px;
+    padding:8px 16px;
+    border-radius:10px;
+    text-transform:uppercase;
+}
+
+.verdict .badge.high{background:rgba(255,82,82,.14);color:var(--high);border:1px solid rgba(255,82,82,.4);}
+.verdict .badge.info{background:rgba(255,179,0,.12);color:var(--info);border:1px solid rgba(255,179,0,.4);}
+.verdict .badge.blocked{background:rgba(76,175,80,.12);color:var(--blocked);border:1px solid rgba(76,175,80,.4);}
+.verdict .badge.unknown{background:rgba(154,154,160,.12);color:var(--unknown);border:1px solid rgba(154,154,160,.35);}
+
+.verdict .headline{
+    font-size:17px;
+    font-weight:700;
+    color:#fff;
 }
 
 h3{color:#fff;font-weight:700;margin-top:24px;}
@@ -197,22 +216,45 @@ table{
     overflow:hidden;
 }
 
-table td{
+table td,table th{
     border-bottom:1px solid #262629;
     padding:13px 16px;
     color:#dcdce0;
     font-size:14px;
     word-break:break-word;
+    text-align:left;
+}
+
+table th{
+    background:#0e0e10;
+    color:var(--muted);
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    font-weight:600;
 }
 
 table tr:last-child td{border-bottom:none;}
 
 table td:first-child{
-    width:180px;
+    width:190px;
     background:#0e0e10;
 }
 
 table td b{color:var(--red-bright);font-weight:600;}
+
+.pill{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    font-weight:500;
+    padding:3px 10px;
+    border-radius:20px;
+}
+
+.pill.yes{background:rgba(255,82,82,.14);color:var(--high);}
+.pill.no{background:rgba(76,175,80,.12);color:var(--blocked);}
+.pill.na{background:rgba(154,154,160,.12);color:var(--unknown);}
 
 pre{
     background:#000;
@@ -253,6 +295,70 @@ pre{
 }
 
 @keyframes spin{to{transform:rotate(360deg);}}
+
+/* ---------- Responsive: tablet & mobile ---------- */
+
+@media (max-width:640px){
+    body{padding:22px 12px;}
+
+    /* If a table is still too wide, let it scroll instead of breaking layout */
+    #result table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+
+    .container{border-radius:14px;}
+
+    .header{
+        flex-direction:row;
+        gap:12px;
+        padding:22px 18px;
+        text-align:left;
+    }
+
+    .logo{width:40px;height:40px;border-radius:11px;}
+    .logo svg{width:22px;height:22px;}
+
+    .title-block h1{font-size:23px;}
+    .title-block .sub{font-size:12px;}
+
+    .body{padding:22px 16px;}
+
+    input#url{font-size:14px;padding:12px 14px;}
+
+    .origin-note{
+        font-size:12px;
+        padding:11px 12px;
+        margin-bottom:18px;
+    }
+    .origin-note code{font-size:11.5px;}
+
+    button{width:100%;padding:14px 20px;}
+
+    #result{margin-top:22px;}
+
+    .verdict{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:8px;
+    }
+    .verdict .headline{font-size:15.5px;}
+
+    h3{margin-top:20px;font-size:16px;}
+
+    /* Tables: drop the rigid 190px first column and tighten spacing */
+    table{margin-top:16px;}
+    table td,table th{padding:11px 12px;font-size:13px;}
+    table td:first-child{width:auto;min-width:110px;}
+
+    pre{font-size:12px;padding:13px;max-height:300px;}
+}
+
+@media (max-width:400px){
+    body{padding:16px 10px;}
+    .header{padding:20px 14px;}
+    .body{padding:18px 13px;}
+    .title-block h1{font-size:21px;}
+    table td,table th{padding:9px 10px;font-size:12.5px;}
+    table td:first-child{min-width:96px;}
+}
 </style>
 
 </head>
@@ -270,7 +376,7 @@ pre{
 </div>
 <div class="title-block">
 <h1>CORS<span>air</span></h1>
-<p class="sub">CORS Misconfiguration</p>
+<p class="sub">CORS Misconfiguration Tester</p>
 </div>
 </div>
 
@@ -282,16 +388,13 @@ pre{
 id="url"
 value="https://target.com/api/profile">
 
-<label class="checkbox-row">
-<input
-type="checkbox"
-id="cred"
-checked>
-Include Cookies (credentials)
-</label>
+<div class="origin-note">
+<span>&#9432;</span>
+<span>Requests are sent from this page's fixed origin: <code id="origin-display">&mdash;</code>. Browsers don't let JavaScript change the <code>Origin</code> header, so CORSair tests whether <em>this</em> origin can read the response &mdash; it can't spoof any arbitrary origin we give it. It runs both a credentialed and an uncredentialed request and compares them.</span>
+</div>
 
-<button onclick="exploit()">
-Fetch Response
+<button id="run" onclick="runTest()">
+Test CORS Policy
 </button>
 
 <div id="result"></div>
@@ -319,129 +422,180 @@ Fetch Response
 
 <script>
 
-async function exploit(){
-
-let url=document.getElementById("url").value;
-
-let includeCredentials=document.getElementById("cred").checked;
-
-let credentials=includeCredentials?"include":"omit";
-
-let result=document.getElementById("result");
-
-result.innerHTML="<p>Requesting...</p>";
-
-try{
-
-const response=await fetch(url,{
-
-method:"GET",
-
-mode:"cors",
-
-credentials:credentials
-
-});
-
-const body=await response.text();
-
-let headers="";
-
-response.headers.forEach((value,key)=>{
-
-headers+=key+" : "+value+"<br>";
-
-});
-
-result.innerHTML=`
-
-<h2 class="success">
-✅ VULNERABLE
-</h2>
-
-<p>
-The browser successfully read a cross-origin response.
-If this request contained authenticated cookies,
-sensitive information may be exposed.
-</p>
-
-<table>
-
-<tr>
-<td><b>Origin</b></td>
-<td>${window.location.origin}</td>
-</tr>
-
-<tr>
-<td><b>Credentials</b></td>
-<td>${credentials}</td>
-</tr>
-
-<tr>
-<td><b>HTTP Status</b></td>
-<td>${response.status}</td>
-</tr>
-
-<tr>
-<td><b>Response Size</b></td>
-<td>${body.length} bytes</td>
-</tr>
-
-<tr>
-<td><b>Readable Headers</b></td>
-<td>${headers || "None"}</td>
-</tr>
-
-</table>
-
-<h3>Response Body</h3>
-
-<pre>${escapeHtml(body)}</pre>
-
-`;
-
-}catch(e){
-
-result.innerHTML=`
-
-<h2 class="fail">
-❌ NOT VULNERABLE
-</h2>
-
-<p>
-
-The browser blocked reading the cross-origin response.
-
-</p>
-
-<p>
-
-Error :
-
-<b>${e.name}</b>
-
-</p>
-
-<pre>
-
-${e.message}
-
-</pre>
-
-`;
-
-}
-
-}
+document.getElementById("origin-display").innerText = window.location.origin;
 
 function escapeHtml(text){
+    const div=document.createElement("div");
+    div.innerText=text==null?"":String(text);
+    return div.innerHTML;
+}
 
-const div=document.createElement("div");
+// Step 1: reachability probe. A no-cors request never rejects *because of* CORS
+// (it returns an opaque response), so if even this throws, the failure is
+// network / DNS / mixed-content — not a CORS decision.
+async function probeReachable(url){
+    try{
+        await fetch(url,{mode:"no-cors",credentials:"omit"});
+        return true;
+    }catch(e){
+        return false;
+    }
+}
 
-div.innerText=text;
+// Step 2: a single cors read attempt. Returns whether JS could read the body,
+// plus whatever detail the browser exposed.
+async function attemptRead(url,credentials){
+    try{
+        const response=await fetch(url,{method:"GET",mode:"cors",credentials:credentials});
+        const body=await response.text();
+        let headers=[];
+        response.headers.forEach((value,key)=>{headers.push(key+": "+value);});
+        return {
+            readable:true,
+            status:response.status,
+            size:body.length,
+            headers:headers,
+            body:body
+        };
+    }catch(e){
+        return {readable:false,error:e.name+": "+e.message};
+    }
+}
 
-return div.innerHTML;
+function classify(reachable,uncred,cred){
+    if(cred.readable){
+        return {
+            level:"high",
+            label:"HIGH",
+            headline:"Authenticated data is readable cross-origin",
+            detail:"The credentialed request succeeded, so the server returned an Access-Control-Allow-Origin matching this exact origin together with Access-Control-Allow-Credentials: true (a wildcard * is not allowed with credentials). If this endpoint serves private, cookie-authenticated data, another origin could read it."
+        };
+    }
+    if(uncred.readable){
+        return {
+            level:"info",
+            label:"INFO",
+            headline:"Readable without credentials only",
+            detail:"The uncredentialed request succeeded but the credentialed one did not — typically an Access-Control-Allow-Origin: * on a public endpoint. This is usually intentional and safe, and is only a concern if the data was meant to be private."
+        };
+    }
+    if(reachable){
+        return {
+            level:"blocked",
+            label:"BLOCKED",
+            headline:"CORS blocked the cross-origin read",
+            detail:"The server is reachable, but the browser prevented this origin from reading the response. The Same-Origin Policy is doing its job for this origin. (A server-side tool is still needed to test crafted origins such as null or suffix-match bypasses.)"
+        };
+    }
+    return {
+        level:"unknown",
+        label:"UNREACHABLE",
+        headline:"Couldn't complete the request",
+        detail:"Even a no-cors probe failed, so this is a network, DNS, TLS, or mixed-content problem — not a CORS conclusion. Check the URL is correct and reachable, and that an HTTPS page isn't calling an HTTP endpoint."
+    };
+}
 
+function renderMatrix(uncred,cred){
+    function cell(r){
+        if(r.readable) return '<span class="pill yes">readable</span>';
+        return '<span class="pill no">blocked</span>';
+    }
+    function statusCell(r){ return r.readable?escapeHtml(r.status):"&mdash;"; }
+    function sizeCell(r){ return r.readable?escapeHtml(r.size)+" bytes":"&mdash;"; }
+    return `
+<table>
+<tr>
+<th>Request</th>
+<th>Result</th>
+<th>Status</th>
+<th>Body size</th>
+</tr>
+<tr>
+<td><b>Without credentials</b></td>
+<td>${cell(uncred)}</td>
+<td>${statusCell(uncred)}</td>
+<td>${sizeCell(uncred)}</td>
+</tr>
+<tr>
+<td><b>With credentials (cookies)</b></td>
+<td>${cell(cred)}</td>
+<td>${statusCell(cred)}</td>
+<td>${sizeCell(cred)}</td>
+</tr>
+</table>`;
+}
+
+function renderDetails(chosen){
+    if(!chosen || !chosen.readable) return "";
+    let headerRows = chosen.headers.length
+        ? chosen.headers.map(h=>escapeHtml(h)).join("<br>")
+        : "None exposed to JavaScript";
+    const MAX=20000;
+    let body=chosen.body.length>MAX
+        ? chosen.body.slice(0,MAX)+"\n\n… (truncated, "+chosen.body.length+" bytes total)"
+        : chosen.body;
+    return `
+<table>
+<tr>
+<td><b>Origin used</b></td>
+<td>${escapeHtml(window.location.origin)}</td>
+</tr>
+<tr>
+<td><b>Readable headers</b></td>
+<td>${headerRows}</td>
+</tr>
+</table>
+<h3>Response Body</h3>
+<pre>${escapeHtml(body)}</pre>
+<p style="font-size:12.5px;margin-top:10px">
+Note: the browser only exposes "simple" response headers to JavaScript. CORS
+headers like Access-Control-Allow-Origin are usually hidden unless the server
+lists them in Access-Control-Expose-Headers, so this table may look sparse even
+on a permissive server. Reading the raw CORS headers requires a server-side tool.
+</p>`;
+}
+
+async function runTest(){
+    let url=document.getElementById("url").value.trim();
+    let result=document.getElementById("result");
+    let button=document.getElementById("run");
+
+    if(!url){
+        result.innerHTML="<p>Enter a target URL first.</p>";
+        return;
+    }
+
+    button.disabled=true;
+    result.innerHTML="<p>Testing… running reachability, uncredentialed, and credentialed requests.</p>";
+
+    try{
+        const reachable=await probeReachable(url);
+        const uncred=await attemptRead(url,"omit");
+        const cred=await attemptRead(url,"include");
+
+        const verdict=classify(reachable,uncred,cred);
+        // Prefer showing the credentialed body if that read succeeded, else the uncredentialed one.
+        const chosen=cred.readable?cred:(uncred.readable?uncred:null);
+
+        result.innerHTML=`
+<div class="verdict">
+<span class="badge ${verdict.level}">${verdict.label}</span>
+<span class="headline">${escapeHtml(verdict.headline)}</span>
+</div>
+<p>${escapeHtml(verdict.detail)}</p>
+${renderMatrix(uncred,cred)}
+${renderDetails(chosen)}
+`;
+    }catch(e){
+        result.innerHTML=`
+<div class="verdict">
+<span class="badge unknown">ERROR</span>
+<span class="headline">Something went wrong while testing</span>
+</div>
+<pre>${escapeHtml(e.name+": "+e.message)}</pre>`;
+    }finally{
+        button.disabled=false;
+    }
 }
 
 </script>
