@@ -16,8 +16,7 @@ Credentialed read — a cors request with credentials: include (cookies attached
 
 🔴 HIGH 
 Authenticated data is readable cross-origin — the server allows a specific origin with credentials. Private, cookie-authed data could be read by another origin.
-🟡 INFO
-Readable without credentials only — typically Access-Control-Allow-Origin: * on a public endpoint. Usually intentional and safe.
+🟡 INFO-Readable without credentials only — typically Access-Control-Allow-Origin: * on a public endpoint. Usually intentional and safe.
 🟢 BLOCKED
 The Same-Origin Policy blocked the read. Working as intended for this origin.
 ⚪ UNREACHABLE
