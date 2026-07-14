@@ -14,13 +14,14 @@ Reachability probe — a no-cors request to confirm the endpoint is actually rea
 Uncredentialed read — a cors request with credentials: omit.
 Credentialed read — a cors request with credentials: include (cookies attached).
 
-🔴 HIGH 
-Authenticated data is readable cross-origin — the server allows a specific origin with credentials. Private, cookie-authed data could be read by another origin.
-🟡 INFO-Readable without credentials only — typically Access-Control-Allow-Origin: * on a public endpoint. Usually intentional and safe.
-🟢 BLOCKED
+🔴 HIGH :
+Authenticated data is readable cross-origin - the server allows a specific origin with credentials. Private, cookie-authed data could be read by another origin.
+🟡 INFO : 
+Readable without credentials only - typically Access-Control-Allow-Origin: * on a public endpoint. Usually intentional and safe.
+🟢 BLOCKED :
 The Same-Origin Policy blocked the read. Working as intended for this origin.
-⚪ UNREACHABLE
-Even a no-cors probe failed — a network, DNS, TLS, or mixed-content issue, not a CORS conclusion.
+⚪ UNREACHABLE :
+Even a no-cors probe failed - a network, DNS, TLS, or mixed-content issue, not a CORS conclusion.
 
 How it works (and its limits) :
 Browsers don't let JavaScript set the Origin header, so CORSair tests whether this page's own origin can read the target , it can't spoof arbitrary origins. This makes it a fast, honest first pass, but it cannot test crafted-origin bypasses like null, suffix matching, or reflected-origin misconfigurations. Those require a server-side tool. CORSair is upfront about this in its own output.
