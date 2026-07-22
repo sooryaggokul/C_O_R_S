@@ -30,7 +30,7 @@ How it works (and its limits) :
 Browsers don't let JavaScript set the Origin header, so CORSair tests whether this page's own origin can read the target , it can't spoof arbitrary origins. This makes it a fast, honest first pass, but it cannot test crafted-origin bypasses like null, suffix matching, or reflected-origin misconfigurations. Those require a server-side tool. CORSair is upfront about this in its own output.
 
 ## Usage
-1. Open the tool: https://sooryaggokul.github.io/CORSair/
+1. Open the tool: https://corsair-tool.netlify.app/
 2. Enter the target URL.
 3. Click **Test CORS Policy** to see the result.
 
